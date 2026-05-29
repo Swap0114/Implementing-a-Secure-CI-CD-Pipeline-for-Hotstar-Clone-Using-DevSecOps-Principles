@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hotstar-clone
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hotstar-clone
+  template:
+    metadata:
+      labels:
+        app: hotstar-clone
+    spec:
+      containers:
+      - name: hotstar-clone
+        image: swap0114/hotstar-clone:latest
+        ports:
+        - containerPort: 3000
