@@ -1,8 +1,7 @@
 pipeline {
     agent any
     environment {
-        DOCKER_IMAGE = "swap0114/hotstar-clone"
-        SONAR_PROJECT = "hotstar-clone"
+        DOCKER_IMAGE = "swaps0114/hotstar-clone"
     }
     stages {
         stage('Git Checkout') {
@@ -29,7 +28,7 @@ pipeline {
         }
         stage('Docker Scout Scan') {
             steps {
-                sh "docker scout cves ${DOCKER_IMAGE}:latest || true"
+                sh "docker-scout cves ${DOCKER_IMAGE}:latest || true"
             }
         }
         stage('Push to Docker Hub') {
@@ -39,7 +38,7 @@ pipeline {
                     usernameVariable: 'DOCKER_USER',
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
-                    sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
+                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
                     sh "docker push ${DOCKER_IMAGE}:latest"
                 }
             }
